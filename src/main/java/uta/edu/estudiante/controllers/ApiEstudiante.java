@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping("rest")
+@RequestMapping("/api") 
 public class ApiEstudiante {
     @Autowired
     private EstudianteRepository estudianteRepository;
