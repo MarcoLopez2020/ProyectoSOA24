@@ -3,65 +3,52 @@
 ## Descripción
 Este proyecto implementa un sistema básico para gestionar información de estudiantes utilizando Spring Boot. Incluye modelos, controladores y rutas para realizar operaciones CRUD sobre los datos de los estudiantes.
 
-## Estructura del Código
+## Endpoints Disponibles
 
-### Controlador `ApiEstudiante`
+| Método | Endpoint              | Descripción                                   |
+|--------|-----------------------|-----------------------------------------------|
+| GET    | `/api/`              | Muestra el índice (index.html).              |
+| GET    | `/api/all`           | Obtiene todos los estudiantes.               |
+| GET    | `/api/search/{cedula}` | Busca un estudiante por su cédula.           |
+| POST   | `/api/save/{cedula}`  | Crea un nuevo estudiante.                    |
+| PUT    | `/api/edit/{cedula}`  | Actualiza los datos de un estudiante.        |
+| DELETE | `/api/delete/{cedula}`| Elimina un estudiante por su cédula.         |
+| GET    | `/api/saludar`       | Devuelve "Hola mundo" como saludo.           |
 
-```java
-@RestController
-@RequestMapping("/api") 
-public class ApiEstudiante {
-    @Autowired
-    private EstudianteRepository estudianteRepository;
+## Cómo Iniciar y Ejecutar el Proyecto
 
-    @GetMapping("/")
-    public String index() {
-        return "index"; // Devuelve la página index.html ubicada en resources/static
-    }
+### Prerrequisitos
 
-    @GetMapping("/all")
-    public List<Estudiante> getEstudiantes() {
-        return estudianteRepository.findAll();
-    }
+- Java JDK 11 o superior.
+- Apache Maven.
+- Un IDE como IntelliJ IDEA, Eclipse o VS Code.
+- Base de datos configurada (opcional, si utiliza una).
 
-    @GetMapping("/search/{cedula}")
-    public Estudiante getEstudianteById(@PathVariable String cedula) {
-        return estudianteRepository.findById(cedula).orElse(null);
-    }
-    
-    @PostMapping("/save/{cedula}")
-    public Estudiante addEstudiante(@PathVariable String cedula, @RequestBody Estudiante estudiante) {
-        estudiante.setCedula(cedula);
-        return estudianteRepository.saveAndFlush(estudiante);
-    }
+### Pasos para Iniciar el Proyecto
 
-    @PutMapping("/edit/{cedula}")
-    public Estudiante updateEstudiante(@PathVariable String cedula, @RequestBody Estudiante estudiante) {
-        estudiante.setCedula(cedula);
-        return estudianteRepository.saveAndFlush(estudiante);
-    }
+1. Clonar el repositorio:
+   ```bash
+   git clone <URL_DEL_REPOSITORIO>
+   cd <NOMBRE_DEL_PROYECTO>
+   ```
 
-    @DeleteMapping("/delete/{cedula}")
-    public void deleteEstudiante(@PathVariable String cedula) {
-        estudianteRepository.deleteById(cedula);
-    }
+2. Construir el proyecto:
+   ```bash
+   mvn clean install
+   ```
 
-    @GetMapping("/saludar")
-    public String saluda() {
-        return "Hola mundo";
-    }
-}
-```
+3. Ejecutar la aplicación:
+   ```bash
+   mvn spring-boot:run
+   ```
 
-## Rutas Disponibles
+4. Acceder a la aplicación:
+   Abra su navegador y diríjase a `http://localhost:8080/api` para interactuar con la API.
 
-- **GET** `/api/`: Devuelve la página principal.
-- **GET** `/api/all`: Obtiene la lista de todos los estudiantes.
-- **GET** `/api/search/{cedula}`: Obtiene un estudiante por su cédula.
-- **POST** `/api/save/{cedula}`: Agrega un nuevo estudiante.
-- **PUT** `/api/edit/{cedula}`: Actualiza un estudiante existente.
-- **DELETE** `/api/delete/{cedula}`: Elimina un estudiante por su cédula.
-- **GET** `/api/saludar`: Retorna un saludo simple.
+### Pruebas de Endpoints
 
-## Notas
-Este proyecto utiliza JPA para la persistencia de datos y Spring Data JPA para simplificar las operaciones con la base de datos.
+Puede usar herramientas como Postman, cURL o su navegador para probar los endpoints disponibles. Por ejemplo:
+- Obtener todos los estudiantes:
+  ```bash
+  curl -X GET http://localhost:8080/api/all
+  ```
